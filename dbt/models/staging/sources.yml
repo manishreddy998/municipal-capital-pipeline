@@ -1,0 +1,17 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+    tables:
+      - name: municipal_documents
+      - name: document_pages
+      - name: extracted_mentions
+      - name: truth_municipalities
+      - name: truth_projects
+      - name: truth_appearances
+  - name: core
+    schema: core
+    tables:
+      - name: project_entity_links
+      - name: entity_review_queue

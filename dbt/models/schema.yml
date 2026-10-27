@@ -1,0 +1,76 @@
+version: 2
+
+models:
+  - name: stg_municipal_documents
+    columns:
+      - name: doc_id
+        tests:
+          - unique
+          - not_null
+      - name: file_sha256
+        tests:
+          - not_null
+
+  - name: stg_extracted_mentions
+    columns:
+      - name: mention_id
+        tests:
+          - unique
+          - not_null
+      - name: doc_id
+        tests:
+          - not_null
+      - name: file_sha256
+        tests:
+          - not_null
+      - name: verbatim_quote
+        tests:
+          - not_null
+
+  - name: int_project_entity_links
+    columns:
+      - name: mention_id
+        tests:
+          - unique
+          - not_null
+      - name: resolved_entity_id
+        tests:
+          - not_null
+
+  - name: int_budget_amendment_chains
+    columns:
+      - name: mention_id
+        tests:
+          - unique
+          - not_null
+
+  - name: mart_infrastructure_signals
+    columns:
+      - name: signal_id
+        tests:
+          - unique
+          - not_null
+      - name: municipality_id
+        tests:
+          - not_null
+      - name: latest_file_sha256
+        tests:
+          - not_null
+      - name: latest_verbatim_quote
+        tests:
+          - not_null
+
+  - name: mart_utility_spend_forecast
+    columns:
+      - name: municipality_id
+        tests:
+          - not_null
+      - name: asset_category
+        tests:
+          - not_null
+
+  - name: mart_eval_scoreboard
+    columns:
+      - name: total_mentions_evaluated
+        tests:
+          - not_null
