@@ -1,0 +1,61 @@
+{
+  "gate_passed": true,
+  "corpus": {
+    "municipalities": 80,
+    "held_out_test_municipalities": 24,
+    "distinct_projects": 1200,
+    "documents_pdf": 400,
+    "pages_pdf": 960,
+    "project_appearances": 3200,
+    "scored_fields": 19200
+  },
+  "extraction": {
+    "overall_field_accuracy": 1.0,
+    "exact_match_mentions": 3200,
+    "total_mentions": 3200,
+    "cost_per_document_usd": 0.00197,
+    "total_batch_cost_usd": 0.7899,
+    "extraction_seconds": 0.24
+  },
+  "entity_resolution_held_out": {
+    "split": "test",
+    "true_positives": 1077,
+    "false_positives": 0,
+    "false_negatives": 3,
+    "true_negatives": 1368,
+    "precision": 1.0,
+    "recall": 0.9972,
+    "f1": 0.9986
+  },
+  "missing_code_recovery": {
+    "missing_code_mentions": 457,
+    "linked_correctly": 452,
+    "accuracy": 0.9891
+  },
+  "planted_defects_caught": {
+    "budget_amendment_events": "180 of 180",
+    "table_math_discrepancies": "40 of 40",
+    "tabled_motions_excluded_from_spend": "40 of 40",
+    "prompt_injection_documents_neutralized": "20 of 20"
+  },
+  "receipt_verification": {
+    "total_receipts_audited": 3200,
+    "receipts_matching_pdf_exact": 3200,
+    "mismatches": 0,
+    "audit_seconds": 2.87
+  },
+  "gold_benchmark": {
+    "questions": 60,
+    "correct": 60,
+    "accuracy": 1.0
+  },
+  "adversarial_break_it_suite": {
+    "questions": 50,
+    "passed": 50,
+    "pass_rate": 1.0,
+    "hostile_summaries_tested": 50,
+    "hostile_summaries_blocked": 50,
+    "uncited_claims_reaching_output": 0
+  },
+  "evaluation_seconds": 3.23
+}
