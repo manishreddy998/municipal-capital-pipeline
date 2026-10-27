@@ -2,24 +2,33 @@ services:
   pipeline:
     build: .
     environment:
-      - WAREHOUSE_TARGET=duckdb
-      - DUCKDB_PATH=data/municipal_capital.duckdb
-      - PYTHONPATH=/app/src:/app
-      - DBT_PROFILES_DIR=/app/dbt
+      - WAREHOUSE_TARGET=${WAREHOUSE_TARGET:-duckdb}
+      - GCP_PROJECT_ID=${GCP_PROJECT_ID:-}
     volumes:
       - ./data:/app/data
       - ./results:/app/results
     command: ["make", "all"]
 
+  dashboard:
+    build: .
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+      - ./results:/app/results
+    command: ["streamlit", "run", "src/dashboard.py", "--server.port", "8501", "--server.address", "0.0.0.0"]
+    depends_on:
+      pipeline:
+        condition: service_completed_successfully
+
   api:
     build: .
     ports:
       - "8120:8120"
-    environment:
-      - WAREHOUSE_TARGET=duckdb
-      - DUCKDB_PATH=data/municipal_capital.duckdb
-      - PYTHONPATH=/app/src:/app
     volumes:
       - ./data:/app/data
       - ./results:/app/results
     command: ["uvicorn", "src.api:app", "--host", "0.0.0.0", "--port", "8120"]
+    depends_on:
+      pipeline:
+        condition: service_completed_successfully

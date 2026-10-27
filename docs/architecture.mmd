@@ -1,30 +1,25 @@
 flowchart TB
-  subgraph Sources["Public Municipal Sources"]
-    CA[Council Agendas & Minutes PDF]
-    CIP[5-Year Capital Improvement Plans PDF]
-    RFP[Utility Master Plans & Tender Notices]
+  CA[Council agendas and minutes PDF] --> RAW
+  CIP[5 year capital improvement plans PDF] --> RAW
+  RFP[Utility master plans and tender notices] --> RAW
+  CM[Committee and compliance reports PDF] --> RAW
+  subgraph Pipeline [Cloud Composer and Beam job]
+    RAW[(Warehouse raw<br/>sha256 per file and page)] --> EXT[Structured extractor<br/>20 way async, sha256 cache]
+    EXT --> STG[dbt staging<br/>component math, tabled motions]
+    STG --> RES[Project entity resolution<br/>blocking, logistic regression, union find]
+    RES --> CHN[dbt amendment chains<br/>latest budget, superseded rows]
+    CHN --> EV[(Signal store<br/>budget, file, page and line,<br/>quote, sha256, math check)]
+    EV --> MRT[dbt marts<br/>signals, utility forecast, scoreboard]
   end
-
-  subgraph Ingestion["Cloud Composer (Airflow) & Apache Beam (Dataflow)"]
-    CA --> BM[Beam PDF Reader & SHA-256 Hasher]
-    CIP --> BM
-    RFP --> BM
-    BM --> SAN[Public Comment Sanitizer & Line Indexer]
-    SAN --> RAW[(BigQuery / DuckDB raw)]
+  subgraph Verify [Receipt engine]
+    Q[Signal query] --> L[Store lookup] --> RC[Receipt]
+    RC --> M[Summary writer<br/>one checked sentence]
+    M --> CK{Claim checker<br/>every dollar, year and id<br/>must be on the receipt}
+    RC --> CK
+    CK -->|cited| OUT[Signal with receipt]
+    CK -->|not cited| REF[Refuse]
   end
-
-  subgraph Extraction["Structured Extraction & Warehouse"]
-    RAW --> EXT[Vertex AI Gemini / Async Structured Extractor]
-    EXT --> CACHE[(SHA-256 Content Cache)]
-    EXT --> STG[dbt Staging & Component Math Reconciler]
-    STG --> ER[Cross-Document Entity Resolver & Union-Find]
-    ER --> CHN[dbt Budget Amendment Chains]
-    CHN --> MRT[(dbt Marts: Infrastructure Signals)]
-  end
-
-  subgraph Gate["Verification & Release Gate"]
-    MRT --> AUD[PDF Receipt Auditor: SHA-256 + Page + Line Quote]
-    AUD --> GATE{Zero Uncited Claim Gate}
-    GATE -->|100% Cited| UI[FastAPI Signal Explorer & Receipt API]
-    GATE -->|Uncited / Tabled| REF[Block & Refuse Unverified Claim]
-  end
+  EV --> L
+  OUT --> UI[Dashboard and API<br/>links open the source PDF page and line]
+  BK[50 break it questions<br/>and an auditor that reopens all 400 PDFs] --> CK
+  BK --> CI[CI fails on any unsupported claim]
