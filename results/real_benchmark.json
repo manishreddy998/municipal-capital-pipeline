@@ -1,0 +1,24 @@
+{
+  "note": "Real public data run measures ingestion throughput and classification speed. Real records have no ground-truth answer key.",
+  "contact_columns_loaded": 0,
+  "source_tenders_total_rows": 7199,
+  "construction_and_infra_tenders": 987,
+  "distinct_solicitation_numbers": 866,
+  "distinct_contracting_agencies": 44,
+  "tenders_scan_seconds": 0.29,
+  "tenders_rows_per_second": 24416,
+  "tenders_by_asset_category": {
+    "Roads": 869,
+    "Power/Grid": 41,
+    "Stormwater": 18,
+    "Transit": 17,
+    "Water": 17,
+    "Wastewater": 17,
+    "Broadband": 8
+  },
+  "federal_contracts_scanned": 1313327,
+  "civil_and_water_contracts_matched": 1111,
+  "contracts_scan_seconds": 6.64,
+  "contracts_rows_per_second": 197917,
+  "total_seconds": 6.94
+}
