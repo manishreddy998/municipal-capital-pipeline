@@ -195,7 +195,11 @@ DOC_TYPES = [
 ]
 
 
-def _make_mention_title(rng: random.Random, muni_short: str, base_facility: str, short_facility: str, scope: str, code: str, doc_type: str, drop_code: bool) -> str:
+def _make_mention_title(rng: random.Random, muni_short: str, base_facility: str, short_facility: str, scope: str, code: str, doc_type: str, drop_code: bool, drop_sector: bool = False) -> str:
+    if drop_code and drop_sector:
+        # Realistic municipal shorthand omitting both the capital project code and the sector number
+        base_no_sec = " ".join(w for w in short_facility.split() if not w.isdigit() and w.lower() != "sector")
+        return f"{muni_short} {base_no_sec} Capital Improvement Work"
     variant = rng.randint(0, 4)
     if variant == 0:
         title = f"{base_facility} - {scope}"
@@ -383,6 +387,7 @@ def generate_corpus(force: bool = False) -> dict:
                     project_code,
                     doc_type,
                     drop_code,
+                    drop_sector=(drop_code and (app_counter % 35 == 0)),
                 )
 
                 rec = {

@@ -4,10 +4,10 @@
   "cache_hits": 0,
   "mentions_extracted": 3200,
   "receipts_verified_exact": 3200,
-  "estimated_input_tokens": 504934,
-  "estimated_output_tokens": 1190734,
-  "estimated_total_cost_usd": 0.7902,
-  "estimated_cost_per_doc_usd": 0.00165,
-  "extraction_seconds": 0.22,
-  "docs_per_second": 2181.8
+  "estimated_input_tokens": 504562,
+  "estimated_output_tokens": 1190338,
+  "estimated_total_cost_usd": 0.7899,
+  "estimated_cost_per_doc_usd": 0.00197,
+  "extraction_seconds": 0.24,
+  "docs_per_second": 1666.7
 }

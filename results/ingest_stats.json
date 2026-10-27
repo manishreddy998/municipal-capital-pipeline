@@ -2,7 +2,7 @@
   "runner": "BeamCompatibleLocalDoFnRunner",
   "documents_ingested": 400,
   "pages_ingested": 960,
-  "total_bytes_hashed": 2062501,
+  "total_bytes_hashed": 2060239,
   "adversarial_documents_flagged": 20,
-  "ingest_seconds": 3.24
+  "ingest_seconds": 3.34
 }

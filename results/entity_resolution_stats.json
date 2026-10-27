@@ -1,0 +1,44 @@
+{
+  "total_mentions": 3200,
+  "candidate_pairs_scored": 8160,
+  "training_pairs": 5712,
+  "resolved_entities": 1205,
+  "true_projects": 1200,
+  "missing_code_mentions": 457,
+  "missing_code_mentions_linked_correctly": 452,
+  "missing_code_link_accuracy": 0.9891,
+  "held_out_test_metrics": {
+    "split": "test",
+    "true_positives": 1077,
+    "false_positives": 0,
+    "false_negatives": 3,
+    "true_negatives": 1368,
+    "precision": 1.0,
+    "recall": 0.9972,
+    "f1": 0.9986
+  },
+  "train_metrics": {
+    "split": "train",
+    "true_positives": 2512,
+    "false_positives": 0,
+    "false_negatives": 8,
+    "true_negatives": 3192,
+    "precision": 1.0,
+    "recall": 0.9968,
+    "f1": 0.9984
+  },
+  "review_queue_pairs": 62,
+  "feature_weights": {
+    "exact_code_match": 0.86,
+    "code_conflict": -1.557,
+    "sector_exact_match": 1.491,
+    "sector_conflict": -5.305,
+    "token_jaccard": 4.678,
+    "fuzz_token_set": 3.909,
+    "fuzz_token_sort": 2.007,
+    "budget_ratio": 7.407,
+    "same_funding_source": -0.169,
+    "same_regulatory_driver": -0.169
+  },
+  "resolution_seconds": 0.53
+}
