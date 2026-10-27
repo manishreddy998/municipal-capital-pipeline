@@ -1,0 +1,44 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  pipeline-and-gate:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: src:.
+      DBT_PROFILES_DIR: dbt
+      WAREHOUSE_TARGET: duckdb
+      DUCKDB_PATH: data/municipal_capital.duckdb
+      REAL_DATA: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Generate synthetic municipal PDF corpus (400 PDFs, 960 pages, 3,200 appearances)
+        run: python -m src.synth_corpus
+      - name: Run Apache Beam PDF ingestion and SHA-256 page indexing
+        run: python -m src.beam_ingest
+      - name: Run async structured signal extraction and receipt verification
+        run: python -m src.extractor
+      - name: Build dbt staging views
+        run: python -m src.warehouse --step staging
+      - name: Run cross-document project entity resolution
+        run: python -m src.entity_resolution
+      - name: Build dbt intermediate amendment chains, marts, and tests
+        run: python -m src.warehouse --step marts
+      - name: Run PDF receipt audit, 60 gold questions, and 50 adversarial break-it gate
+        run: python -m src.evaluate
+      - name: Run pytest suite and DAG verification
+        run: pytest -q
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: scoreboard-and-results
+          path: results/*.json
