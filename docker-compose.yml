@@ -1,0 +1,25 @@
+services:
+  pipeline:
+    build: .
+    environment:
+      - WAREHOUSE_TARGET=duckdb
+      - DUCKDB_PATH=data/municipal_capital.duckdb
+      - PYTHONPATH=/app/src:/app
+      - DBT_PROFILES_DIR=/app/dbt
+    volumes:
+      - ./data:/app/data
+      - ./results:/app/results
+    command: ["make", "all"]
+
+  api:
+    build: .
+    ports:
+      - "8120:8120"
+    environment:
+      - WAREHOUSE_TARGET=duckdb
+      - DUCKDB_PATH=data/municipal_capital.duckdb
+      - PYTHONPATH=/app/src:/app
+    volumes:
+      - ./data:/app/data
+      - ./results:/app/results
+    command: ["uvicorn", "src.api:app", "--host", "0.0.0.0", "--port", "8120"]

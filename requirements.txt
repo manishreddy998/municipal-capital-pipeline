@@ -1,0 +1,16 @@
+duckdb>=1.1.0
+dbt-core>=1.9.0
+dbt-duckdb>=1.9.0
+pandas>=2.2.0
+numpy>=1.26.0
+scikit-learn>=1.5.0
+rapidfuzz>=3.9.0
+reportlab>=4.2.0
+pypdf>=5.0.0
+pyyaml>=6.0.1
+fastapi>=0.115.0
+uvicorn>=0.30.0
+pytest>=8.2.0
+requests>=2.32.0
+matplotlib>=3.9.0
+pillow>=10.4.0

@@ -1,0 +1,33 @@
+seed: 42
+synthetic:
+  municipalities: 80
+  projects: 1200
+  documents: 400
+  appearances: 3200
+  held_out_municipality_share: 0.30
+  budget_amendment_project_share: 0.15
+  table_math_error_share: 0.04
+  tabled_motion_share: 0.05
+  prompt_injection_doc_share: 0.05
+  missing_project_code_share: 0.14
+  fiscal_window: "2026-2030"
+extraction:
+  batch_concurrency: 20
+  max_retries: 3
+  retry_base_seconds: 0.25
+  vertex_input_cost_per_1m: 0.15
+  vertex_output_cost_per_1m: 0.60
+entity_resolution:
+  auto_merge_threshold: 0.88
+  review_floor_threshold: 0.52
+  max_block_size: 200
+evaluation:
+  min_field_accuracy: 0.98
+  min_entity_precision: 0.98
+  min_entity_recall: 0.96
+  min_gold_accuracy: 0.96
+  max_uncited_claims: 0
+real:
+  tenders_cache_path: "/workspace/procurement-evidence-pipeline/data/real_cache/tenders_2025_2026.csv"
+  contracts_cache_path: "/workspace/procurement-evidence-pipeline/data/real_cache/contracts.csv"
+  tenders_url: "https://canadabuys.canada.ca/opendata/pub/2025-2026-TenderNotice-AvisAppelOffres.csv"
